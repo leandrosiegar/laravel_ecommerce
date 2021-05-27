@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Brand;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Models\Category;
@@ -45,7 +46,13 @@ class CategorySeeder extends Seeder
 
         foreach ($categories as $category) {
             // el factory crea la imagen y añade ese nuevo campo a los ya existentes en $category
-            Category::factory(1)->create($category);
-        }
+            $category = Category::factory(1)->create($category)->first();
+            $brands = Brand::factory(4)->create();
+
+            foreach ($brands as $brand) {
+                $brand->categories()->attach($category->id);
+            }
+
+        } // foreach
     }
 }
