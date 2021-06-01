@@ -1,3 +1,11 @@
 .containerlsg {
       @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
  }
+
+ #navMenuNaveg {
+    height:calc(100vh - 4rem)
+}
+/* mediante css al pasar el hover activar el otro submenu */
+.navigation-link:hover + .navigation-submenu {
+    display: block !important;
+}
