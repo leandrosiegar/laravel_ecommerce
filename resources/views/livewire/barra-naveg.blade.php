@@ -1,7 +1,9 @@
 <div>
+
 <!-- estas en resources\views\livewire\barra-naveg.blade.php -->
-<header class="bg-gray-700 sticky top-0" x-data="dropdownLSG()">
-    <div class="containerlsg flex items-center h-16 justify-between md:justify-start">
+<!-- z-50 es el z-index (50 es el valor máximo q permite) -->
+<header class="bg-gray-700 sticky top-0 z-50" xxstyle="position:fixed;width:100%;" x-data="dropdownLSG()">
+    <div class="containerlsg flex items-center h-16 justify-between md:justify-start" style="">
         <a
             :class="{'bg-opacity-100 text-orange-500': mostrar }"
             x-on:click="mostrarlo()"

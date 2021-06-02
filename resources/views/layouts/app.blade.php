@@ -31,7 +31,7 @@
             @livewire('barra-naveg')
 
             <!-- Page Content -->
-            <main>
+            <main class="containerlsg">
                 {{ $slot }}
             </main>
         </div>
@@ -39,11 +39,6 @@
         @stack('modals')
 
         @livewireScripts
-
-
-
-
-
 
 
         <script>
@@ -70,5 +65,9 @@
                 }
             }
         </script>
+
+        @stack('scripts')
+
+
     </body>
 </html>
