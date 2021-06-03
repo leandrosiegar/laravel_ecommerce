@@ -1,4 +1,5 @@
 <div wire:init="cargarPosts"> <!-- antes de cargar este div ejecuta el método cargarPost -->
+    <!-- estas en resources\views\livewire\div-category-products.blade.php -->
     @if (count($products))
         <div class="glider-contain">
             <ul class="glider-{{ $category->id }}">
@@ -10,7 +11,7 @@
                         </figure>
                         <div class="py-4 px-6">
                             <h1 class="text-lg font-semibold">
-                                <a href="">
+                                <a href="{{ route('products.show', $product)}}">
                                     {{ Str::limit($product->name,20) }}
                                 </a>
                             </h1>
