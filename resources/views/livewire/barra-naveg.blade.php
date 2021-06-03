@@ -2,8 +2,8 @@
 
 <!-- estas en resources\views\livewire\barra-naveg.blade.php -->
 <!-- z-50 es el z-index (50 es el valor máximo q permite) -->
-<header class="bg-gray-700 sticky top-0 z-50" xxstyle="position:fixed;width:100%;" x-data="dropdownLSG()">
-    <div class="containerlsg flex items-center h-16 justify-between md:justify-start" style="">
+<header class="bg-gray-700 sticky top-0 z-50" style="position:fixed;width:100%;" x-data="dropdownLSG()">
+    <div class="containerlsg flex items-center h-16 justify-between md:justify-start">
         <a
             :class="{'bg-opacity-100 text-orange-500': mostrar }"
             x-on:click="mostrarlo()"
@@ -102,7 +102,7 @@
                 <ul class="bg-white">
                     @foreach ($categories as $category)
                         <li class="navigation-link text-trueGray-500 hover:bg-orange-500 hover:text-white">
-                            <a class="py-2 px-4 text-sm flex items-center" href="">
+                            <a class="py-2 px-4 text-sm flex items-center" href="{{ route('categories.show', $category) }}">
                                 <span class="flex justify-center w-9">
                                     <!-- se pone así para q lo ejecute pq si pones las dos llaves te escribe solo el texto -->
                                     {!! $category->icon !!}
@@ -135,7 +135,7 @@
             <ul>
                 @foreach ($categories as $category)
                     <li class=" text-trueGray-500 hover:bg-orange-500 hover:text-white">
-                        <a class="py-2 px-4 text-sm flex items-center" href="">
+                        <a class="py-2 px-4 text-sm flex items-center" href="{{ route('categories.show', $category) }}">
                             <span class="flex justify-center w-9">
                                 <!-- se pone así para q lo ejecute pq si pones las dos llaves te escribe solo el texto -->
                                 {!! $category->icon !!}

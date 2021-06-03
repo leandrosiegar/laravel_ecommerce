@@ -25,4 +25,9 @@ class Category extends Model
         // se relacionan "a través" de la tabla subcategory (no hay una relación directa entre las tablas)
         return $this->hasManyThrough(Product::class, Subcategory::class);
     }
+
+    // Url amigable
+    public function getRouteKeyName() {
+        return 'slug';
+    }
 }

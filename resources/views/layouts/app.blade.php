@@ -31,7 +31,9 @@
             @livewire('barra-naveg')
 
             <!-- Page Content -->
-            <main class="containerlsg">
+            <!-- Estás en resources\views\layouts\app.blade.php -->
+            <!-- En $slot se carga la view del componente q se esté llamando -->
+            <main class="containerlsg" style="margin-top:60px;">
                 {{ $slot }}
             </main>
         </div>

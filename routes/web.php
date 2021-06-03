@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 
+Use App\Http\Controllers\CategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +17,8 @@ use App\Http\Controllers\WelcomeController;
 */
 
 Route::get('/', WelcomeController::class); // si no se especifica método se ejecuta por defecto el método __invoke
+
+Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
