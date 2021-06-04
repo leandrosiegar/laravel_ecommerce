@@ -13,11 +13,11 @@ class Size extends Model
 
     // relación uno a muchos (inversa)
     public function product() {
-        $this->belongsTo(Product::class);
+       return $this->belongsTo(Product::class);
     }
 
     // relación muchos a muchos
     public function colors() {
-        $this->belongsToMany(Color::class);
+        return $this->belongsToMany(Color::class)->withPivot('quantity');
     }
 }

@@ -31,7 +31,10 @@ class Product extends Model
 
     // relación muchos a muchos
     public function colors() {
-        return $this->belongsToMany(Color::class);
+        // return $this->belongsToMany(Color::class);
+        // con withPivot conseguimos q podamos acceder a ese campo quantity cuando lo llamemos desde product->colors
+        // ya q por defecto no devuelve ningún valor (solo establece la relación)
+        return $this->belongsToMany(Color::class)->withPivot('quantity');
     }
 
     // relación uno a muchos polimórfica

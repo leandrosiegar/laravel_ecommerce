@@ -5,6 +5,7 @@ use App\Http\Controllers\WelcomeController;
 
 Use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PruebaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,10 @@ Route::get('/', WelcomeController::class); // si no se especifica método se eje
 Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+Route::get('/prueba', [PruebaController::class, 'show']);
+
+
 
 
 
