@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class AddCartItemColor extends Component
 {
     // product y colors se van a pasar por parámetros al crear este componente
+    // se crea desde resources\views\products\show.blade.php
     public $product;
     public $colors;
 
@@ -17,7 +18,10 @@ class AddCartItemColor extends Component
     public $stock = 0;
     public $colorSelected = "";
 
-    public $options = [];
+    public $options = [
+        'color_id' => null,
+        'size_id' => null
+    ];
 
     public function mount() {
         $this->colors = $this->product->colors;
@@ -35,11 +39,14 @@ class AddCartItemColor extends Component
     // automáticamente solo con poner updated al nombre de la función ya se ejecuta cada vez q haya
     // un cambio en esa propiedad (en este caso colorSelected)
     public function updatedColorSelected($value) {
-        // pivot te trae la información q hay en la tabla intermedia de muchos a muchos q hay
-        // entre products y colors
+
         $color = $this->product->colors->find($value);
-        $this->stock = $color->pivot->quantity;
-        $this->options['color'] = $color->name;
+        // llamamos a la funcion en nuestros app/helpers.php
+        $this->options['color_id'] = $color->id;
+        $this->options['color_name'] = $color->name;
+        $this->stock = cantidadDisponible($this->product->id, $color->id);
+
+        // dd("AQUI LLEGA");
     }
 
     public function addItem() {
@@ -53,6 +60,13 @@ class AddCartItemColor extends Component
             'weight' => 550,
             'options' => $this->options
         ]);
+
+        // actualizar el stock
+        // dd($this->colorSelected);
+        // dd($this->colors);
+        $this->stock = cantidadDisponible($this->product->id, $this->colorSelected);
+
+        $this->reset('cantidad');
 
         // emitTo hace que se ejecute solo el componente dropdown-carrito, si se pusiera solo emit lo escucharía todos
         $this->emitTo('dropdown-carrito', 'render');

@@ -1,5 +1,12 @@
-<div >
+<div>
     <div>
+        <p class="text-gray-700 mb-4">
+            <span class="font-semibold text-lg">
+                Stock disponible:
+            </span>
+           {{ $stock }}
+        </p>
+
         <p class="text-xl text-gray-700">Talla: </p>
 
         <select wire:model="sizeSelected" class="form-control-lsg w-full">
@@ -12,7 +19,8 @@
     </div>
 
     <div class="mt-2">
-        <p>STOCKKK: {{ $stock}} </p>
+
+
 
         <p class="text-xl text-gray-700">Color: </p>
 
@@ -62,5 +70,4 @@
 
         </div>
     </div>
-
 </div>

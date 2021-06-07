@@ -23,14 +23,16 @@
                         <article class="flex-1"> <!-- flex-1 para q  ocupe todo el ancho disponible -->
                             <h1 class="font-bold">{{ $item->name }}</h1>
                             <div class="flex"> <!-- flex lo coloca siempre al costa (a la derecha y no para abajo) -->
-                                <p>Cant: {{ $item->qty }}</p>
-                                @isset($item->options["color"])
-                                    <p class="mx-2">- Color: {{ __($item->options["color"]) }}</p>
-                                @endisset
 
-                                @isset($item->options["size"])
-                                    <p>- {{ __($item->options["size"]) }}</p>
-                                @endisset
+                                <p>Cant: {{ $item->qty }}</p>
+
+                                @if($item->options["color_id"] != null)
+                                    <p class="mx-2">- Color: {{ __($item->options["color_name"]) }}</p>
+                                @endif
+
+                                @if($item->options["size_id"] != null)
+                                    <p> {{ __($item->options["size_name"]) }}</p>
+                                @endif
 
                             </div>
 

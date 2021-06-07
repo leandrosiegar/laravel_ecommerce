@@ -57,11 +57,13 @@
                 </div>
 
                 @if ($product->subcategory->size)
-                    @livewire('add-cart-item-size', ['product' => $product])
-
+                    <!-- producto con color y size  (ej: Moda)-->
+                    @livewire('add-cart-item-color-size', ['product' => $product])
                 @elseif ($product->subcategory->color)
+                    <!-- producto solo con color (ej: moviles) -->
                     @livewire('add-cart-item-color', ['product' => $product])
                 @else
+                    <!-- producto sin color y sin size (ej: ordenadores) -->
                     @livewire('add-cart-item', ['product' => $product])
                 @endif
 

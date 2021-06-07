@@ -6,8 +6,8 @@
             Stock disponible:
         </span>
        {{ $stock }}
-
     </p>
+
     <div class="flex">
         <div class="mr-4">
             <!-- {{ var_dump($options) }} -->
@@ -38,6 +38,7 @@
         <div class="flex-1"> <!-- con flex-1 ocupa todo el ancho posible que quede -->
             <x-button-lsg color="orange"
                 class="w-full"
+                x-bind:disabled="$wire.cantidad > {{ $stock }}"
                 wire:click="addItem"
                 wire:loading.attr="disabled"
                 wire:target="addItem"

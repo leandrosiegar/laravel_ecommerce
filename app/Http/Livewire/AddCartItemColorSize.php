@@ -9,9 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Storage;
 
-class AddCartItemSize extends Component
+class AddCartItemColorSize extends Component
 {
-    // product se le pasa como parámetro cuando se crea el componente
     public $product;
     public $sizes;
 
@@ -23,7 +22,10 @@ class AddCartItemSize extends Component
     public $cantidad = 1;
     public $stock = 0;
 
-    public $options = [];
+    public $options = [
+        'color_id' => null,
+        'size_id' => null
+    ];
 
     public function mount() {
         $this->sizes = $this->product->sizes;
@@ -49,6 +51,10 @@ class AddCartItemSize extends Component
             'options' => $this->options
         ]);
 
+        // actualizar el stock
+        $this->stock = cantidadDisponible($this->product->id, $this->options['color_id'], $this->options['size_id']);
+        $this->reset('cantidad');
+
         // emitTo hace que se ejecute solo el componente dropdown-carrito, si se pusiera solo emit lo escucharía todos
         $this->emitTo('dropdown-carrito', 'render');
     }
@@ -56,25 +62,22 @@ class AddCartItemSize extends Component
     public function updatedSizeSelected($value) {
         $size = Size::find($value);
         $this->colors = $size->colors;
-        $this->options['size'] = $size->name;
+        $this->options['size_id'] = $size->id;
+        $this->options['size_name'] = $size->name;
     }
 
     public function updatedColorSelected($value) {
         $size = Size::find($this->sizeSelected);
         $color = $size->colors->find($value);
 
-        $this->stock = $color->pivot->quantity;
-        $this->options['color'] = $color->name;
+        $this->options['color_id'] = $color->id;
+        $this->options['color_name'] = $color->name;
+
+        $this->stock = cantidadDisponible($this->product->id, $this->options['color_id'], $this->options['size_id']);
     }
-
-
 
     public function render()
     {
-        return view('livewire.add-cart-item-size');
+        return view('livewire.add-cart-item-color-size');
     }
-
-
-
-
 }

@@ -1,6 +1,14 @@
 <div x-data>
     <!-- para poder usar alpine hay que poner eso de x-data -->
     <!-- con x-data se consigue que se pueda acceder a cualquier elemento dentro de ese div -->
+
+    <p class="text-gray-700 mb-4">
+        <span class="font-semibold text-lg">
+            Stock disponible:
+        </span>
+       {{ $stock }}
+    </p>
+
     <p class="text-xl text-gray-700">  Color: </p>
     <select wire:model="colorSelected" name="" id="" class="form-control-lsg w-full">
         <option value=""  selected disabled> Seleccionar un valor </option>
@@ -24,7 +32,7 @@
             <span class="mx-2 text-gray-700"> {{ $cantidad }}</span>
 
             <x-jet-secondary-button
-                x-bind:disabled="$wire.cantidad >= {{ $stock }}"
+                x-bind:disabled="$wire.cantidad > {{ $stock }}"
                 wire:loading.attr="disabled"
                 wire:target="incrementar"
                 wire:click="incrementar"
