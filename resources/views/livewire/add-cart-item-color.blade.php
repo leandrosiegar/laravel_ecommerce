@@ -5,7 +5,8 @@
     <select wire:model="colorSelected" name="" id="" class="form-control-lsg w-full">
         <option value=""  selected disabled> Seleccionar un valor </option>
         @foreach ($colors as $color)
-            <option value="{{ $color->id }}"> {{ $color->name }} </option>
+            <!-- lo de __() es para q lo traduzca a ES, debes tenerlo en resources\lang\es.json -->
+            <option value="{{ $color->id }}"> {{ __($color->name) }} </option>
         @endforeach
     </select>
 
@@ -37,6 +38,9 @@
             <x-button-lsg
                 color="orange" class="w-full"
                 x-bind:disabled="!wire.stock"
+                wire:click="addItem"
+                wire:loading.attr="disabled"
+                wire:target="addItem"
                 >
                 Añadir al carrito de compra
             </x-button-lsg>

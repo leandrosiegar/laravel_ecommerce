@@ -1,7 +1,11 @@
 {
+    "blue": "azul",
     "E-Mail Address": "Correo electrónico",
+    "black": "negro",
     "Password": "Contraseña",
+    "red": "rojo",
     "Remember Me": "Recuérdame",
+    "white": "blanco",
     "Login": "Acceder",
     "Forgot Your Password?": "¿Olvidaste tu contraseña?",
     "Register": "Registro",

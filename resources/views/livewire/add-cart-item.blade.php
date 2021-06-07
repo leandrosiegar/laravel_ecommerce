@@ -10,6 +10,10 @@
     </p>
     <div class="flex">
         <div class="mr-4">
+            <!-- {{ var_dump($options) }} -->
+
+
+
             <x-jet-secondary-button
                 x-bind:disabled="$wire.cantidad <= 1"
                 wire:loading.attr="disabled"
@@ -32,7 +36,12 @@
 
         </div>
         <div class="flex-1"> <!-- con flex-1 ocupa todo el ancho posible que quede -->
-            <x-button-lsg color="orange" class="w-full">
+            <x-button-lsg color="orange"
+                class="w-full"
+                wire:click="addItem"
+                wire:loading.attr="disabled"
+                wire:target="addItem"
+                >
                 Añadir al carrito de compra
             </x-button-lsg>
 

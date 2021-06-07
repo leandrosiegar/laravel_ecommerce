@@ -26,6 +26,11 @@ Route::get('/products/{product}', [ProductController::class, 'show'])->name('pro
 
 Route::get('/prueba', [PruebaController::class, 'show']);
 
+Route::get('/pruebaBorrarCarrito', function() {
+    /* poniendo el \ delante de Cart no es necesario importarlo */
+    \Cart::destroy();
+});
+
 
 
 
