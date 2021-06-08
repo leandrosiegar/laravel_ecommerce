@@ -1,10 +1,11 @@
 <div>
     <div>
-        <p class="text-gray-700 mb-4">
+        <p class="text-gray-700 my-4">
             <span class="font-semibold text-lg">
                 Stock disponible:
             </span>
-           {{ $stock }}
+
+             {{ $stock }}
         </p>
 
         <p class="text-xl text-gray-700">Talla: </p>

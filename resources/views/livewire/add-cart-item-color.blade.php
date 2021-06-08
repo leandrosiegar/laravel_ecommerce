@@ -2,11 +2,13 @@
     <!-- para poder usar alpine hay que poner eso de x-data -->
     <!-- con x-data se consigue que se pueda acceder a cualquier elemento dentro de ese div -->
 
-    <p class="text-gray-700 mb-4">
+    <p class="text-gray-700 my-4">
         <span class="font-semibold text-lg">
             Stock disponible:
         </span>
-       {{ $stock }}
+
+        {{ $stock }}
+
     </p>
 
     <p class="text-xl text-gray-700">  Color: </p>
@@ -41,16 +43,17 @@
             </x-jet-secondary-button>
 
         </div>
+
         <div class="flex-1"> <!-- con flex-1 ocupa todo el ancho posible que quede -->
             <!-- mientras stock esté a false (a cero) que esté disabled -->
             <x-button-lsg
                 color="orange" class="w-full"
-                x-bind:disabled="!wire.stock"
+
                 wire:click="addItem"
                 wire:loading.attr="disabled"
                 wire:target="addItem"
                 >
-                Añadir al carrito de compra
+                Añadir al carrito de compraaaa
             </x-button-lsg>
 
         </div>

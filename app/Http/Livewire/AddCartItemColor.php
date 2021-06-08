@@ -39,13 +39,11 @@ class AddCartItemColor extends Component
     // automáticamente solo con poner updated al nombre de la función ya se ejecuta cada vez q haya
     // un cambio en esa propiedad (en este caso colorSelected)
     public function updatedColorSelected($value) {
-
         $color = $this->product->colors->find($value);
         // llamamos a la funcion en nuestros app/helpers.php
         $this->options['color_id'] = $color->id;
         $this->options['color_name'] = $color->name;
         $this->stock = cantidadDisponible($this->product->id, $color->id);
-
         // dd("AQUI LLEGA");
     }
 
@@ -67,6 +65,7 @@ class AddCartItemColor extends Component
         $this->stock = cantidadDisponible($this->product->id, $this->colorSelected);
 
         $this->reset('cantidad');
+        $this->reset('colorSelected');
 
         // emitTo hace que se ejecute solo el componente dropdown-carrito, si se pusiera solo emit lo escucharía todos
         $this->emitTo('dropdown-carrito', 'render');

@@ -54,6 +54,8 @@ class AddCartItemColorSize extends Component
         // actualizar el stock
         $this->stock = cantidadDisponible($this->product->id, $this->options['color_id'], $this->options['size_id']);
         $this->reset('cantidad');
+        $this->reset('colorSelected');
+        $this->reset('sizeSelected');
 
         // emitTo hace que se ejecute solo el componente dropdown-carrito, si se pusiera solo emit lo escucharía todos
         $this->emitTo('dropdown-carrito', 'render');

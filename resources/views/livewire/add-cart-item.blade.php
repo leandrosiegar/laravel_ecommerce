@@ -1,6 +1,7 @@
 <div x-data>
     <!-- con x-data se consigue que se pueda acceder a cualquier elemento dentro de ese div -->
 
+
     <p class="text-gray-700 mb-4">
         <span class="font-semibold text-lg">
             Stock disponible:
