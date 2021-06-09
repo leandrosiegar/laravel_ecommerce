@@ -9,6 +9,7 @@ use App\Http\Controllers\PruebaController;
 
 use App\Http\Controllers\SearchController;
 
+use App\Http\Livewire\ShoppingCart;
 
 Route::get('/', WelcomeController::class); // si no se especifica método se ejecuta por defecto el método __invoke
 
@@ -24,6 +25,10 @@ Route::get('/pruebaBorrarCarrito', function() {
     /* poniendo el \ delante de Cart no es necesario importarlo */
     \Cart::destroy();
 });
+
+// en este caso no asignamos una ruta a un controller sino directamente al
+// componente livewire que hemos creado
+Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');
 
 
 
