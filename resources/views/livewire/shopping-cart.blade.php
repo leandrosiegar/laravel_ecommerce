@@ -39,7 +39,11 @@
 
                             <td class="text-center">
                                 <span>€ {{ $item->price }}</span>
-                                <a class="ml-6 cursor-pointer hover:text-red-600">
+                                <a class="ml-6 cursor-pointer hover:text-red-600"
+                                    wire:click="borrarItem('{{ $item->rowId }}')"
+                                    wire:loading.class="text-red-600 opacity-25"
+                                    wire:target="borrarItem('{{ $item->rowId }}')"
+                                    >
                                     <i class="fas fa-trash"></i>
 
                                 </a>
@@ -70,13 +74,15 @@
                 </table>
 
 
-            <a class="text-sm cursor-pointer hover:underline mt-3 inline-block" wire:click="borrarCarrito">
+            <a class="text-sm cursor-pointer hover:underline mt-3 inline-block" wire:click="borrarCarrito" >
                 <i class="fas fa-trash"></i>
                 Borrar carrito de compra
             </a>
        @else
             <div class="flex flex-col items-center">
-                <x-carrito color="black" > </x-carrito>
+                <!-- x-carrito dibuja el icono del carrito -->
+                <x-carrito color="black" ></x-carrito>
+
                 <p class="text-lg text-gray-700 mt-4">Tu carrito de compra está vacío</p>
 
                 <x-btn-custom-enlace href="/" class="mt-4 px-16"> Ir al inicio </x-btn-custom-enlace>
@@ -87,4 +93,28 @@
 
 
    </section>
+
+   @if (Cart::count())
+        <div class="bg-white rounded-lg shadow-lg px-6 py-4 mt-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-gray-700">
+                        <span class="font-bold text-lg">
+                            TOTAL:
+                        </span>
+                        € {{ Cart::subTotal() }}
+                    </p>
+                </div>
+
+                <div>
+                     <x-btn-custom-enlace>
+                         Continuar
+                     </x-btn-custom-enlace>
+                </div>
+
+            </div>
+
+        </div>
+
+   @endif
 </div>

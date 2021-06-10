@@ -16,6 +16,12 @@ class ShoppingCart extends Component
         $this->emitTo('dropdown-carrito', 'render'); // q ejecute el método render del componente dropdown-carrito
     }
 
+    public function borrarItem($rowId) {
+        Cart::remove($rowId);
+        $this->emitTo('dropdown-carrito', 'render'); // q ejecute el método render del componente dropdown-carrito
+
+    }
+
     public function render()
     {
         return view('livewire.shopping-cart');
