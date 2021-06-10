@@ -107,7 +107,7 @@
                 </div>
 
                 <div>
-                     <x-btn-custom-enlace>
+                     <x-btn-custom-enlace href="{{ route('orders.create')}}">
                          Continuar
                      </x-btn-custom-enlace>
                 </div>

@@ -10,6 +10,7 @@ use App\Http\Controllers\PruebaController;
 use App\Http\Controllers\SearchController;
 
 use App\Http\Livewire\ShoppingCart;
+use App\Http\Livewire\CreateOrder;
 
 Route::get('/', WelcomeController::class); // si no se especifica método se ejecuta por defecto el método __invoke
 
@@ -30,8 +31,9 @@ Route::get('/pruebaBorrarCarrito', function() {
 // componente livewire que hemos creado
 Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');
 
-
-
+// en este caso no asignamos una ruta a un controller sino directamente al
+// componente livewire que hemos creado
+Route::get('orders/create', CreateOrder::class)->middleware('auth')->name('orders.create');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
