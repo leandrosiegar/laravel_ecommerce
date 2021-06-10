@@ -6,6 +6,8 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
+use Gloudemans\Shoppingcart\Facades\Cart;
+
 class MergeTheCart
 {
     /**
@@ -26,6 +28,7 @@ class MergeTheCart
      */
     public function handle(Login $event)
     {
-        //
+        // meter lo que haya en la BD en el carrito
+        Cart::merge(auth()->user()->id);
     }
 }
