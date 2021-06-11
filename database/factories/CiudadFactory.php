@@ -22,7 +22,8 @@ class CiudadFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->word(),
+            'cost_envio' => $this->faker->randomElement([5,10,15])
         ];
     }
 }

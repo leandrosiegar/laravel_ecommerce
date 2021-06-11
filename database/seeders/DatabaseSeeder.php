@@ -30,5 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ColorProductSeeder::class);
         $this->call(SizeSeeder::class);
         $this->call(ColorSizeSeeder::class);
+        /// el DepartamentoSeeder ya se encarga de generar todos los seeders para departamento, ciudades y distritos
+        $this->call(DepartamentoSeeder::class);
     }
 }
