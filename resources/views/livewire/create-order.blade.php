@@ -27,7 +27,7 @@
         <!-- con entangle se le asigna el valor q tenga la propiedad envio_type (por defecto 1) -->
         <div x-data="{ envio_type: @entangle('envio_type') }">
             <p class="mt-6 mb-3 text-lg text-gray-700 font-semibold">
-                Envíos
+                Envíossss
             </p>
 
             <label class="bg-white rounded-lg shadow px-6 py-4 flex items-center mb-4">
