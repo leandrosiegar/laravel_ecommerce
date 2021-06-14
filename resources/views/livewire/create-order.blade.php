@@ -4,20 +4,30 @@
         <div class="bg-white rounded-lg shadow p-6">
             <div class="mb-4">
                 <x-jet-label value="Nombre de contacto"> </x-jet-label>
+                <!-- .defer es para q actualice el valor de esa variable solo cuando se llame a una acción y no en cada momento que
+                    vaya cambiando el valor   -->
                 <x-jet-input type="text"
+                    wire:model.defer="contact"
                     placeholder="Ingrese el nombre de la persona que recibirá el producto"
                     class="w-full"
                     >
                 </x-jet-input>
+
+                <x-jet-input-error for="contact">
+                </x-jet-input-error>
             </div>
 
             <div>
                 <x-jet-label value="Teléfono de contacto"> </x-jet-label>
                 <x-jet-input type="text"
+                    wire:model.defer="phone"
                     placeholder="Ingrese un número de teléfono"
                     class="w-full"
                     >
                 </x-jet-input>
+
+                <x-jet-input-error for="phone">
+                </x-jet-input-error>
             </div>
 
         </div>
@@ -60,6 +70,9 @@
                             @endforeach
 
                         </select>
+
+                        <x-jet-input-error for="departamento_id">
+                        </x-jet-input-error>
                     </div>
 
                      <!-- ciudades -->
@@ -70,8 +83,10 @@
                             @foreach ($ciudades as $ciudad)
                                 <option value="{{$city->id}}"> {{$city->name}}</option>
                             @endforeach
-
                         </select>
+
+                        <x-jet-input-error for="ciudad_id">
+                        </x-jet-input-error>
                     </div>
 
                     <!-- distritos -->
@@ -82,8 +97,10 @@
                             @foreach ($distritos as $distrito)
                                 <option value="{{$distrito->id}}"> {{$distrito->name}}</option>
                             @endforeach
-
                         </select>
+
+                        <x-jet-input-error for="distrito_id">
+                        </x-jet-input-error>
                     </div>
 
                     <!-- dirección -->
@@ -91,6 +108,9 @@
                         <x-jet-label value="Dirección"></x-jet-label>
                         <x-jet-input type="text" class="w-full" wire:model="address">
                         </x-jet-input>
+
+                        <x-jet-input-error for="address">
+                        </x-jet-input-error>
                     </div>
 
                     <!-- dirección -->
@@ -98,6 +118,9 @@
                         <x-jet-label value="Referencia"></x-jet-label>
                         <x-jet-input type="text" class="w-full" wire:model="reference">
                         </x-jet-input>
+
+                        <x-jet-input-error for="reference">
+                        </x-jet-input-error>
                     </div>
 
 
@@ -106,7 +129,7 @@
         </div>
 
         <div>
-            <x-jet-button class="mt-6 mb-4 ">
+            <x-jet-button class="mt-6 mb-4" wire:click="create_order">
                 Continuar con la compra
             </x-jet-button>
 
