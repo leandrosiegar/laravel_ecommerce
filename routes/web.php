@@ -4,10 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 
 Use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PruebaController;
 
 use App\Http\Controllers\SearchController;
+
 
 use App\Http\Livewire\ShoppingCart;
 use App\Http\Livewire\CreateOrder;
@@ -34,6 +36,8 @@ Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');
 // en este caso no asignamos una ruta a un controller sino directamente al
 // componente livewire que hemos creado
 Route::get('orders/create', CreateOrder::class)->middleware('auth')->name('orders.create');
+
+Route::get('orders/{order}/payment',[OrderController::class, 'payment'])->name('orders.payment');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
