@@ -5,7 +5,9 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Departamento;
 use App\Models\Order;
-
+use App\Models\Ciudad;
+use App\Models\Distrito;
+use Database\Seeders\CitySeeder;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 
@@ -49,7 +51,20 @@ class CreateOrder extends Component
                 'reference'
             ]);
         }
+    }
 
+    public function updatedDepartamentoId($value) {
+        $this->ciudades = Ciudad::where('departamento_id', $value)->get();
+        $this->reset('ciudad_id');
+        $this->reset('distrito_id');
+    }
+
+    public function updatedCiudadId($value) {
+        $city = Ciudad::find($value);
+        $this->shipping_cost = $city->cost_envio;
+
+        $this->distritos = Distrito::where('ciudad_id', $value)->get();
+        $this->reset('distrito_id');
     }
 
     public function create_order() {
@@ -70,7 +85,18 @@ class CreateOrder extends Component
         $order->contact = $this->contact;
         $order->phone = $this->phone;
         $order->envio_type = $this->envio_type;
-        $order->shipping_cost = $this->shipping_cost;
+        $order->shipping_cost = 0;
+
+        if ($this->envio_type == 2) {
+            $order->shipping_cost = $this->shipping_cost;
+            $order->departamento_id = $this->departamento_id;
+            $order->ciudad_id = $this->ciudad_id;
+            $order->distrito_id = $this->distrito_id;
+            $order->address = $this->address;
+            $order->reference = $this->reference;
+        }
+
+
         $order->total = $this->shipping_cost + Cart::subtotal();
         $order->content = Cart::Content();
         $order->save();

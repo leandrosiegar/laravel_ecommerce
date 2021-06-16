@@ -47,7 +47,7 @@
                 </span>
 
                 <span class="font-semibold text-gray-700 ml-auto">
-                    Gratis
+                   Gratis
                 </span>
             </label>
 
@@ -81,7 +81,7 @@
                         <select class="form-control-lsg" wire:model="ciudad_id">
                             <option value="" disabled selected> Seleccione una ciudad</option>
                             @foreach ($ciudades as $ciudad)
-                                <option value="{{$city->id}}"> {{$city->name}}</option>
+                                <option value="{{$ciudad->id}}"> {{$ciudad->name}}</option>
                             @endforeach
                         </select>
 
@@ -191,14 +191,25 @@
                 </p>
                 <p class="flex justify-between items-center">
                     Envío:
-                    <span class="font-semibold"> xxxx </span>
+                    <span class="font-semibold">
+                        @if ($envio_type == 1 || $shipping_cost == 0)
+                            Gratis
+                        @else
+                            {{ $shipping_cost }} €
+                        @endif
+                     </span>
                 </p>
 
                 <hr class="mt-4 mb-3">
 
                 <p class="flex justify-between items-center font-semibold">
                     <span class="text-lg">Total:</span>
-                     xxxx €
+                    @if ($envio_type == 1 || $shipping_cost == 0)
+                        {{ Cart::subtotal() }} €
+                    @else
+                        {{ Cart::subtotal() + $shipping_cost }} €
+                    @endif
+
                 </p>
 
 
