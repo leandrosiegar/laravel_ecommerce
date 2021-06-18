@@ -1,6 +1,10 @@
 <!-- estas en resources\views\welcome.blade.php -->
 <x-app-layout class="container">
 
+    @if (Session::has('mensaje'))
+        <div class="alert alert-info">{{ Session::get('mensaje') }}</div>
+    @endif
+
     <div class="container py-8">
         @foreach ($categories as $category)
             <section class="mb-6">

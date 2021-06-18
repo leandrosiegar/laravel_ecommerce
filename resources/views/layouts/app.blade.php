@@ -75,6 +75,7 @@
             }
         </script>
 
+        <!-- Aquí cargará los scripts de cada página -->
         @stack('scripts')
 
 

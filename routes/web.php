@@ -9,12 +9,13 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PruebaController;
 
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\StripeController;
 
 
 use App\Http\Livewire\ShoppingCart;
 use App\Http\Livewire\CreateOrder;
 
-Route::get('/', WelcomeController::class); // si no se especifica método se ejecuta por defecto el método __invoke
+Route::get('/', WelcomeController::class)->name('inicio'); // si no se especifica método se ejecuta por defecto el método __invoke
 
 Route::get('search', SearchController::class)->name('search');
 
@@ -38,6 +39,8 @@ Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');
 Route::get('orders/create', CreateOrder::class)->middleware('auth')->name('orders.create');
 
 Route::get('orders/{order}/payment',[OrderController::class, 'payment'])->name('orders.payment');
+
+Route::post('pagar_por_stripe', [StripeController::class, 'pagar'])->name('pagar_por_stripe');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

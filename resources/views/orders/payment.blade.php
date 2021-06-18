@@ -1,4 +1,5 @@
 <x-app-layout>
+    <!-- estas en resources\views\orders\payment.blade.php -->
     <div class="containerLSG py-8">
         <div class="bg-white rounded-lg shadow-lg px-6 py-4 mb-6">
             <p class="text-gray-700 uppercase">
@@ -71,7 +72,25 @@
         </div>
 
         <div class="bg-white rounded-lg shadow-lg p-6 flex justify-between items-center">
-            <img class="h-8" src="{{ asset('img/iconosTarjCredito.jpg') }}" alt="">
+            <div class="w-1/2">
+                <form action="/pagar_por_stripe" method="post" id="payment-form">
+                    @csrf
+                    <input type="hidden" name="cantidadPagar" value="{{ $order->total * 100 }}">
+                    <input type="hidden" name="descPago" value="Orden-{{ $order->id }} | {{ $order->contact }} | {{ $order->phone }} ">
+                    <img class="h-8" src="{{ asset('img/iconosTarjCredito.jpg') }}" alt="">
+                    <label for="card-element">
+                        Introduce tu tarjeta de crédito:
+                    </label>
+                    <div id="card-element"></div>
+                    <div id="card-errors" role="alert"></div>
+                    <div class="mt-4">
+                        <x-button-lsg color="green"> Realizar el pago </x-button-lsg>
+                    </div>
+                </form>
+            </div>
+
+
+
             <div class="text-gray-700">
                 <p class="text-sm font-semibold">
                     Subtotal: {{ $order->total - $order->shipping_cost }} €
@@ -81,9 +100,71 @@
                 </p>
                 <p class="text-lg font-semibold uppercase">
                     Total: {{ $order->total }} €
+
+
                 </p>
+
+
             </div>
+
         </div>
 
+
+
     </div>
+
+
+
+    @push("scripts")
+        <script src="https://js.stripe.com/v3/"></script>
+        <script>
+            var stripe = Stripe("{{ config('services.stripe.key') }}");
+            var elements = stripe.elements();
+
+            // crear la tarjeta
+            var style = {
+                base: {
+                    // Add your base input styles here. For example:
+                    fontSize: '16px',
+                    color: '#32325d',
+                },
+                };
+            var card = elements.create('card', {style: style});
+            card.mount('#card-element');
+
+            function stripeTokenHandler(token) {
+                // Insert the token ID into the form so it gets submitted to the server
+                var form = document.getElementById('payment-form');
+                var hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'stripeToken');
+                hiddenInput.setAttribute('value', token.id);
+                form.appendChild(hiddenInput);
+
+                // Submit the form
+                form.submit();
+            }
+
+            // Create a token or display an error when the form is submitted.
+            var form = document.getElementById('payment-form');
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    stripe.createToken(card).then(function(result) {
+                        if (result.error) {
+                        // Inform the customer that there was an error.
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                        } else {
+                        // Send the token to your server.
+                        console.log(result.token.id);
+                        stripeTokenHandler(result.token);
+                        }
+                    });
+                });
+        </script>
+
+    @endpush
 </x-app-layout>
+
+
