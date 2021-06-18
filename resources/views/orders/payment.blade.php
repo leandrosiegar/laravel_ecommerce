@@ -75,6 +75,7 @@
             <div class="w-1/2">
                 <form action="/pagar_por_stripe" method="post" id="payment-form">
                     @csrf
+                    <input type="hidden" name="order_id" value="{{ $order->id }}">
                     <input type="hidden" name="cantidadPagar" value="{{ $order->total * 100 }}">
                     <input type="hidden" name="descPago" value="Orden-{{ $order->id }} | {{ $order->contact }} | {{ $order->phone }} ">
                     <img class="h-8" src="{{ asset('img/iconosTarjCredito.jpg') }}" alt="">
