@@ -35,17 +35,18 @@ Route::get('/pruebaBorrarCarrito', function() {
 // componente livewire que hemos creado
 Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');
 
+
+
+// ********************** ORDERS *****************************
+Route::get('orders', [OrderController::class, 'index'])->middleware('auth')->name('orders.index');
 // en este caso no asignamos una ruta a un controller sino directamente al
 // componente livewire que hemos creado
 Route::get('orders/create', CreateOrder::class)->middleware('auth')->name('orders.create');
-
-Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-
+Route::get('orders/{order}', [OrderController::class, 'show'])->middleware('auth')->name('orders.show');
 // Route::get('orders/{order}/payment',[OrderController::class, 'payment'])->name('orders.payment');
 // en vez de mandarlo a un controller mandando a un componente
-Route::get('orders/{order}/payment',PaymentOrder::class)->name('orders.payment'); // en vez de mandarlo a un controller mandando a un componente
-
-Route::post('pagar_por_stripe', [StripeController::class, 'pagar'])->name('pagar_por_stripe');
+Route::get('orders/{order}/payment',PaymentOrder::class)->middleware('auth')->name('orders.payment');
+Route::post('pagar_por_stripe', [StripeController::class, 'pagar'])->middleware('auth')->name('pagar_por_stripe');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
