@@ -72,16 +72,35 @@
 
             </div>
 
-
-
-
-
         </div>
 
         <div class="col-span-3">
+
+            <!-- RESUMEN -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-4 text-gray-700">
+                <p class="text-sm font-semibold">
+                    Subtotal: {{ $order->total - $order->shipping_cost }} €
+                </p>
+                <p class="text-sm font-semibold">
+                    Costes de envío: {{ $order->shipping_cost }} €
+                </p>
+                <p class="text-lg font-semibold uppercase">
+                    Total: {{ $order->total }} €
+                </p>
+            </div>
+
+            <!-- PAYPAL -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-4">
+                <p class="text-lg font-semibold uppercase">Pagar con Paypal</p>
+                <div id="paypal-button-container"></div>
+            </div>
+
+             <!-- STRIPE -->
             <div class="bg-white rounded-lg shadow-lg p-6">
                 <div class="flex justify-between items-center">
-                    <div class="w-1/2">
+                    <div class="w-full">
+                        <p class="text-lg font-semibold uppercase">Pagar con Stripe</p>
+
                         <form action="/pagar_por_stripe" method="post" id="payment-form">
                             @csrf
                             <input type="hidden" name="order_id" value="{{ $order->id }}">
@@ -97,25 +116,11 @@
                                 <x-button-lsg color="green"> Realizar el pago </x-button-lsg>
                             </div>
                         </form>
-                    </div>
-
-
-
-                    <div class="text-gray-700">
-                        <p class="text-sm font-semibold">
-                            Subtotal: {{ $order->total - $order->shipping_cost }} €
-                        </p>
-                        <p class="text-sm font-semibold">
-                            Costes de envío: {{ $order->shipping_cost }} €
-                        </p>
-                        <p class="text-lg font-semibold uppercase">
-                            Total: {{ $order->total }} €
-
-
-                        </p>
-
 
                     </div>
+
+
+
 
                 </div>
             </div>
@@ -128,15 +133,39 @@
 
 
     @push("scripts")
-        <script src="https://js.stripe.com/v3/"></script>
+
+
+        <script src="https://www.paypal.com/sdk/js?client-id={{ config('services.paypal.client_id') }}"></script>
+
         <script>
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                    amount: {
+                        value: '{{ $order->total }}'
+                    }
+                    }]
+                });
+                },
+                onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                });
+                }
+            }).render('#paypal-button-container'); // Display payment options on your web page
+        </script>
+
+
+        // <script src="https://js.stripe.com/v3/"></script>
+
+        <script>
+
             var stripe = Stripe("{{ config('services.stripe.key') }}");
             var elements = stripe.elements();
 
-            // crear la tarjeta
             var style = {
                 base: {
-                    // Add your base input styles here. For example:
                     fontSize: '16px',
                     color: '#32325d',
                 },

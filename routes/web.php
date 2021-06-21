@@ -14,6 +14,7 @@ use App\Http\Controllers\StripeController;
 
 use App\Http\Livewire\ShoppingCart;
 use App\Http\Livewire\CreateOrder;
+use App\Http\Livewire\PaymentOrder;
 
 Route::get('/', WelcomeController::class)->name('inicio'); // si no se especifica método se ejecuta por defecto el método __invoke
 
@@ -38,7 +39,11 @@ Route::get('shopping-cart', ShoppingCart::class)->name('shopping-cart');
 // componente livewire que hemos creado
 Route::get('orders/create', CreateOrder::class)->middleware('auth')->name('orders.create');
 
-Route::get('orders/{order}/payment',[OrderController::class, 'payment'])->name('orders.payment');
+Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
+// Route::get('orders/{order}/payment',[OrderController::class, 'payment'])->name('orders.payment');
+// en vez de mandarlo a un controller mandando a un componente
+Route::get('orders/{order}/payment',PaymentOrder::class)->name('orders.payment'); // en vez de mandarlo a un controller mandando a un componente
 
 Route::post('pagar_por_stripe', [StripeController::class, 'pagar'])->name('pagar_por_stripe');
 

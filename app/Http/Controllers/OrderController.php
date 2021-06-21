@@ -12,4 +12,8 @@ class OrderController extends Controller
         // dd($items);
         return view('orders.payment', compact('order', 'items'));
     }
+
+    public function show(Order $order) {
+        return "estás en show de OrderController";
+    }
 }
