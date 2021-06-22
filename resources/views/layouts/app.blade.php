@@ -32,6 +32,7 @@
     </head>
     <!-- estas en resources\views\layouts\app.blade.php -->
     <body class="font-sans antialiased">
+        <!-- aqui va x-jet-banner -->
         <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">

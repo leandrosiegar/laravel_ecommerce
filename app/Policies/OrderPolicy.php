@@ -32,10 +32,10 @@ class OrderPolicy
 
     public function yaPagado(User $user, Order $order) {
         if ($order->status==2) {
-            return true;
+            return false;
         }
         else {
-            return false;
+            return true;
         }
     }
 }

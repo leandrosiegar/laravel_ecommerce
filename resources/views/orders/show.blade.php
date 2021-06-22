@@ -38,10 +38,17 @@
 
 
 
-        <div class="bg-white rounded-lg shadow-lg px-6 py-4 mb-6">
+        <div class="bg-white rounded-lg shadow-lg px-6 py-4 mb-6 flex items-center">
             <p class="text-gray-700 uppercase">
                 <span class="font-semibold">Número de orden:</span> Orden-{{ $order->id }}
             </p>
+            @if ($order->status==1)
+                <x-btn-custom-enlace class="ml-auto" href="{{ route('orders.payment', $order) }}">
+                    Ir a Pagar
+                </x-btn-custom-enlace>
+            @endif
+
+
         </div>
 
         <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
