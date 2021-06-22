@@ -15,6 +15,7 @@ use App\Http\Controllers\StripeController;
 use App\Http\Livewire\ShoppingCart;
 use App\Http\Livewire\CreateOrder;
 use App\Http\Livewire\PaymentOrder;
+use App\Models\Order;
 
 Route::get('/', WelcomeController::class)->name('inicio'); // si no se especifica método se ejecuta por defecto el método __invoke
 
@@ -25,6 +26,7 @@ Route::get('/categories/{category}', [CategoryController::class, 'show'])->name(
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 Route::get('/prueba', [PruebaController::class, 'show']);
+
 
 Route::get('/pruebaBorrarCarrito', function() {
     /* poniendo el \ delante de Cart no es necesario importarlo */

@@ -42,7 +42,7 @@
                 <p class="text-center text-2xl">
                     {{ $anulado }}
                 </p>
-                <p class="uppercase text-center">Pendiente</p>
+                <p class="uppercase text-center">Anulado</p>
                 <p class="text-center text-2x1 mt-2">
                     <i class="fas fa-times-circle"></i>
                 </p>

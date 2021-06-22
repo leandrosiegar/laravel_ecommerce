@@ -101,6 +101,11 @@ class CreateOrder extends Component
         $order->content = Cart::Content();
         $order->save();
 
+        // borrar del stock de la BD
+        foreach (Cart::content() as $item) {
+            descontarDelStock($item);
+        }
+
         Cart::destroy();
 
         return redirect()->route('orders.payment', $order);

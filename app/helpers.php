@@ -47,3 +47,51 @@ function cantidadDisponible($product_id, $color_id = null, $size_id = null) {
      $cantAdded = cantidadesAddedCarrito($product_id, $color_id, $size_id);
      return $cantTotal - $cantAdded;
 }
+
+// ********************************
+function descontarDelStock($item) {
+    $product = Product::find($item->id);
+    $cant = cantidadDisponible($item->id, $item->options->color_id, $item->options->size_id);
+    if ($item->options->size_id) { // tiene color y talla
+        $size = Size::find($item->options->size_id);
+        $size->colors()->detach($item->options->color_id); // detach elimina el registro de la tabla intermed entre color y size
+        $size->colors()->attach([ // add el nuevo reg en la tabla intermedia pero con la nueva cantidad
+            $item->options->color_id => ['quantity' => $cant]
+        ]);
+    }
+    elseif($item->options->color_id) { // tiene solo color
+        $product->colors()->detach($item->options->color_id); // detach elimina el registro de la tabla intermed
+        $product->colors()->attach([ // add el nuevo reg en la tabla intermedia pero con la nueva cantidad
+            $item->options->color_id => ['quantity' => $cant]
+        ]);
+
+    }
+    else { // no tiene ni color ni talla
+        $product->quantity = $cant;
+        $product->save();
+    }
+}
+
+// ********************************
+function incrementarStock($item) {
+    $product = Product::find($item->id);
+    $cant = getStock($item->id, $item->options->color_id, $item->options->size_id) + $item->qty;
+    if ($item->options->size_id) { // tiene color y talla
+        $size = Size::find($item->options->size_id);
+        $size->colors()->detach($item->options->color_id); // detach elimina el registro de la tabla intermed entre color y size
+        $size->colors()->attach([ // add el nuevo reg en la tabla intermedia pero con la nueva cantidad
+            $item->options->color_id => ['quantity' => $cant]
+        ]);
+    }
+    elseif($item->options->color_id) { // tiene solo color
+        $product->colors()->detach($item->options->color_id); // detach elimina el registro de la tabla intermed
+        $product->colors()->attach([ // add el nuevo reg en la tabla intermedia pero con la nueva cantidad
+            $item->options->color_id => ['quantity' => $cant]
+        ]);
+
+    }
+    else { // no tiene ni color ni talla
+        $product->quantity = $cant;
+        $product->save();
+    }
+}
