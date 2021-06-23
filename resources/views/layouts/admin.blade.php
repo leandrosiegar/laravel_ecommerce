@@ -23,8 +23,12 @@
          <!-- Scripts -->
          <script src="{{ mix('js/app.js') }}" defer></script>
 
+
+
          <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
          <script src="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.7.7/glider.min.js" integrity="sha512-tHimK/KZS+o34ZpPNOvb/bTHZb6ocWFXCtdGqAlWYUcz+BGHbNbHMKvEHUyFxgJhQcEO87yg5YqaJvyQgAEEtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+         <script src="https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js"></script>
 
          <!-- esta carpeta vendor la hemos creado nosotros y allí vamos a ir poniendo todos los plugins que vamos a usar -->
          <script src="{{ asset('vendor/flexslider/jquery.flexslider-min.js') }}"></script>
@@ -59,30 +63,6 @@
         @livewireScripts
 
 
-        <script>
-            function dropdownLSG() {
-                return {
-                    mostrar: false,
-                    mostrarlo() {
-                        if (this.mostrar) {
-                            this.mostrar = false;
-                            // habilitar el scroll
-                            document.getElementsByTagName('html')[0].style.overflow = 'auto';
-                        }
-                        else {
-                            this.mostrar = true;
-                            // deshabilitar el scroll
-                            document.getElementsByTagName('html')[0].style.overflow = 'hidden';
-                        }
-                    },
-                    cerrar() {
-                        this.mostrar = false;
-                        // habilitar el scroll
-                        document.getElementsByTagName('html')[0].style.overflow = 'auto';
-                    }
-                }
-            }
-        </script>
 
         <!-- Aquí cargará los scripts de cada página -->
         @stack('scripts')
