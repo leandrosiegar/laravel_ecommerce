@@ -33,6 +33,8 @@
          <!-- esta carpeta vendor la hemos creado nosotros y allí vamos a ir poniendo todos los plugins que vamos a usar -->
          <script src="{{ asset('vendor/flexslider/jquery.flexslider-min.js') }}"></script>
 
+         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     </head>
     <!-- estas en resources\views\layouts\app.blade.php -->
     <body class="font-sans antialiased">

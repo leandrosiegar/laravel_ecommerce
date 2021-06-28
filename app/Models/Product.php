@@ -48,7 +48,7 @@ class Product extends Model
         // return $this->belongsToMany(Color::class);
         // con withPivot conseguimos q podamos acceder a ese campo quantity cuando lo llamemos desde product->colors
         // ya q por defecto no devuelve ningún valor (solo establece la relación)
-        return $this->belongsToMany(Color::class)->withPivot('quantity');
+        return $this->belongsToMany(Color::class)->withPivot('quantity','id');
     }
 
     // relación uno a muchos polimórfica
