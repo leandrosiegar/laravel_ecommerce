@@ -50,12 +50,24 @@ class ColorProduct extends Component
     public function guardar() {
         $this->validate();
 
-        // attach para introd un reg en la tabla intermedia entre product y colors
-        $this->product->colors()->attach([
-            $this->color_id => [
-                'quantity' => $this->quantity
-            ]
-        ]);
+        $pivot = Pivot::where('color_id',$this->color_id)
+                    ->where('product_id', $this->product->id)
+                    ->first();
+
+        if ($pivot) { // ya existe de antes en la tabla intermedia
+            $pivot->quantity = $pivot->quantity + $this->quantity;
+            $pivot->save();
+        }
+        else {
+            // attach para introd un reg en la tabla intermedia entre product y colors
+            $this->product->colors()->attach([
+                $this->color_id => [
+                    'quantity' => $this->quantity
+                ]
+            ]);
+        }
+
+
         $this->reset(['color_id', 'quantity']);
         $this->emit('guardado');
 

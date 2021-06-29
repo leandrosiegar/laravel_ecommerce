@@ -27,9 +27,18 @@ class SizeProduct extends Component
     public function guardar() {
         $this->validate();
 
-        $this->product->sizes()->create([
-            'name' => $this->name
-        ]);
+        $size = Size::where('product_id', $this->product->id)
+                    ->where('name', $this->name)
+                    ->first();
+
+        if ($size) { // existe algún registro
+            $this->emit('errorSize', 'Esta talla ya existe');
+        }
+        else {
+            $this->product->sizes()->create([
+                'name' => $this->name
+            ]);
+        }
 
         $this->product = $this->product->fresh();
         $this->reset(['name']);

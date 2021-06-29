@@ -66,8 +66,20 @@
 
 
 
-        <!-- Aquí cargará los scripts de cada página -->
+
+
+        <!-- Aquí cargará los scripts de cada página que se llamará con push en cada página -->
         @stack('scripts')
+
+        <script>
+            Livewire.on('errorSize', $mensaje => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: $mensaje,
+                })
+            });
+        </script>
 
 
     </body>
