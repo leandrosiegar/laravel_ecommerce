@@ -1,6 +1,5 @@
-<div>
-    <!-- estas en resources\views\livewire\admin\color-product.blade.php -->
-    <div class="my-12 bg-white shadow-lg rounded-lg p-6">
+<div class="mt-4">
+    <div class="bg-gray-100 shadow-lg rounded-lg p-6">
         <!-- color -->
         <div class="mb-6">
             <x-jet-label>
@@ -52,8 +51,8 @@
         </div>
     </div>
 
-    @if ($product_colors->count())
-        <div class="bg-white shadow-lg rounded-lg p-6">
+    @if ($size_colors->count())
+        <div class="mt-8">
             <table>
                 <thead>
                     <tr>
@@ -63,28 +62,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($product_colors as $product_color)
+                    @foreach ($size_colors as $size_color)
                     <!-- wire:key es para poder identificar ese tr en concreto por si queremos luego manipularlo lo q sea -->
-                        <tr wire:key="product_color_{{$product_color->pivot->id}}">
+                        <tr wire:key="size_color_{{$size_color->pivot->id}}">
                             <td class="capitalize px-4 py-2">
-                                {{ __($colors->find($product_color->pivot->color_id)->name) }}
+                                {{ __($colors->find($size_color->pivot->color_id)->name) }}
                             </td>
                             <td class="px-4 py-2">
-                                {{ $product_color->pivot->quantity }} Unidades
+                                {{ $size_color->pivot->quantity }} Unidades
                             </td>
                             <td class="px-4 py-2 flex">
                                 <!-- a editar le pasamos el id de la tabla intermedia -->
                                 <x-jet-secondary-button
                                     class="ml-auto mr-2"
-                                    wire:click="editar({{$product_color->pivot->id}})"
+                                    wire:click="editar({{$size_color->pivot->id}})"
                                     wire:loading.attr="disabled"
-                                    wire:target="editar({{$product_color->pivot->id}})"
+                                    wire:target="editar({{$size_color->pivot->id}})"
                                     >
                                     Actualizar
                                 </x-jet-secondary-button>
 
                                 <x-jet-danger-button
-                                    wire:click="$emit('deletePivot',{{$product_color->pivot->id}})">
+                                    wire:click="$emit('deletePivot',{{$size_color->pivot->id}})">
                                     Eliminar
                                 </x-jet-danger-button>
                             </td>
@@ -96,7 +95,6 @@
 
         </div>
     @endif
-
 
     <x-jet-dialog-modal wire:model="abrirModal">
         <x-slot name="title">
@@ -138,33 +136,3 @@
         </x-slot>
     </x-jet-dialog-modal>
 </div>
-
-@push("scripts")
-<script>
-    Livewire.on('deletePivot', pivotId => {
-        Swal.fire({
-        title: 'seguro de borrar el Pivot?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // emitTo en vez de emit para q SOLO lo escuche admin.color-product y no todos los demás
-                Livewire.emitTo('admin.color-product','borrar', pivotId)
-                Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-                )
-            }
-        })
-
-    });
-
-
-</script>
-
-@endpush
