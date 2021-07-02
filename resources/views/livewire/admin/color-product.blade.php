@@ -139,32 +139,3 @@
     </x-jet-dialog-modal>
 </div>
 
-@push("scripts")
-<script>
-    Livewire.on('deletePivot', pivotId => {
-        Swal.fire({
-        title: 'seguro de borrar el Pivot?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // emitTo en vez de emit para q SOLO lo escuche admin.color-product y no todos los demás
-                Livewire.emitTo('admin.color-product','borrar', pivotId)
-                Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-                )
-            }
-        })
-
-    });
-
-
-</script>
-
-@endpush

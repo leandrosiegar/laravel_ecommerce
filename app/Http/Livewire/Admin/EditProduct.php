@@ -4,11 +4,13 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Image;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class EditProduct extends Component
 {
@@ -17,6 +19,9 @@ class EditProduct extends Component
     public $subcategories;
     public $brands;
     public $category_id;
+
+    // para cuando se llame desde javascript con emit
+    protected $listeners = ['refreshProduct'];
 
     protected $rules = [
         'category_id' => 'required',
@@ -57,6 +62,10 @@ class EditProduct extends Component
         $this->product->brand_id = "";
     }
 
+    public function refreshProduct() {
+        $this->product = $this->product->refresh();
+    }
+
     // cada vez q cambie el valor de product.name
     public function updatedProductName($value) {
         $this->product->slug = Str::slug($value);
@@ -77,12 +86,14 @@ class EditProduct extends Component
             }
             $this->validate($rules);
         }
-
         $this->product->save();
-
         $this->emit('guardado');
+    }
 
-
+    public function deleteImagen(Image $image) {
+        Storage::delete([$image->url]); // eliminarla físicamente
+        $image->delete(); // borrar de la BD
+        $this->product = $this->product->fresh();
     }
 
     public function render()

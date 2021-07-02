@@ -88,31 +88,4 @@
         </x-slot>
     </x-jet-dialog-modal>
 
-    @push("scripts")
-        <script>
-            Livewire.on("deleteSize", sizeId => {
-                Swal.fire({
-                    title: 'Seguro de borrar esta talla?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        // emitTo en vez de emit para q SOLO lo escuche admin.size-product y no todos los demás
-                        Livewire.emitTo('admin.size-product','borrarTalla', sizeId);
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        )
-                    }
-                })
-            });
-        </script>
-
-    @endpush
-
 </div>

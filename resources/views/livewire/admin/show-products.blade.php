@@ -44,7 +44,13 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 h-10 w-10">
-                                    <img class="h-10 w-10 rounded-full object-cover" src="{{ Storage::url($product->images->first()->url) }}" alt="">
+                                    @if ($product->images->count())
+                                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Storage::url($product->images->first()->url) }}" alt="">
+                                    @else
+                                        <!-- mostrar una imagen por defecto para los prod q no tengan imágenes -->
+                                        <img class="h-10 w-10 rounded-full object-cover" src="https://images.pexels.com/photos/5472514/pexels-photo-5472514.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="">
+                                    @endif
+
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900">

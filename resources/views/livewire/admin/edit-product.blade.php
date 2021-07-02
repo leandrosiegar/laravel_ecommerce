@@ -1,5 +1,39 @@
 <div class="w-max-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-gray-700">
     <h1 class="text-3xl text-center font-semibold mb-8">Modificar producto</h1>
+    <!-- wire:ignore para q cada vez q se renderice la pag por cualquier cambio este div no se toque -->
+    <div class="mb-4" wire:ignore>
+        <form action="{{ route('admin.product.files', $product) }}"
+        method="POST"
+
+        class="dropzone"
+        id="my-awesome-dropzone">
+        </form>
+    </div>
+
+    @if ($product->images->count())
+        <section class="bg-white shadow-xl rounded-lg p-6 mb-4">
+            <h1 class="text-2xl text-center font-semibold mb-2">Imágenes del producto</h1>
+            <ul class="flex flex-wrap">
+                @foreach ($product->images as $image)
+                    <li class="relative" wire:key="imagen-{{ $image->id }}">
+                        <img class="w-32 h-20 object-cover" src="{{ Storage::url($image->url) }}">
+                        <x-jet-danger-button
+                            class="absolute right-2 top-2"
+                            wire:click="deleteImagen({{ $image->id }})"
+                            wire:loading.attr="disabled"
+                            wire:target="deleteImagen({{ $image->id }})"
+                            >
+                            X
+                        </x-jet-danger-button>
+                    </li>
+                @endforeach
+
+            </ul>
+        </section>
+    @endif
+
+
+
     <div class="bg-white shadow-xl rounded-lg p-6">
         <div class="grid grid-cols-2 gap-6">
             <!-- CATEGORIAS -->
@@ -134,4 +168,97 @@
             @livewire("admin.color-product", ['product' => $product], key("color-product-".$product->id))
         @endif
     @endif
+
+    @push("scripts")
+        <script>
+            Dropzone.options.myAwesomeDropzone = {
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                paramName: "fichero",
+                dictDefaultMessage: "Arrastra aquí las imágenes que quieras subir",
+                acceptedFiles: "image/*",
+                maxFilesize: 2, // MB
+                maxFiles: 4,
+                complete: function(fichero) {
+                    this.removeFile(fichero);
+                },
+                queuecomplete: function() {
+                    Livewire.emit('refreshProduct');
+                },
+                accept: function(file, done) {
+                    if (file.name == "justinbieber.jpg") {
+                    done("Naha, you don't.");
+                    }
+                    else { done(); }
+                }
+            };
+
+            Livewire.on("deleteSize", sizeId => {
+                Swal.fire({
+                    title: 'Seguro de borrar esta talla?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        // emitTo en vez de emit para q SOLO lo escuche admin.size-product y no todos los demás
+                        Livewire.emitTo('admin.size-product','borrarTalla', sizeId);
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                })
+            });
+
+            Livewire.on('deletePivot', pivotId => {
+                Swal.fire({
+                title: 'seguro de borrar el Pivot?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // emitTo en vez de emit para q SOLO lo escuche admin.color-product y no todos los demás
+                        Livewire.emitTo('admin.color-product','borrar', pivotId)
+                        Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                        )
+                    }
+                })
+            });
+
+            Livewire.on('deleteColorSize', pivotId => {
+                Swal.fire({
+                title: 'seguro de borrar el Pivot?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // emitTo en vez de emit para q SOLO lo escuche admin.color-product y no todos los demás
+                        Livewire.emitTo('admin.color-size','borrar', pivotId)
+                        Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                        )
+                    }
+                })
+            });
+        </script>
+    @endpush
 </div>

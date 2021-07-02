@@ -18,6 +18,9 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.7.7/glider.min.css" integrity="sha512-YM6sLXVMZqkCspZoZeIPGXrhD9wxlxEF7MzniuvegURqrTGV2xTfqq1v9FJnczH+5OGFl5V78RgHZGaK34ylVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+        <!-- CSS de dropzone -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
         @livewireStyles
 
          <!-- Scripts -->
@@ -33,7 +36,11 @@
          <!-- esta carpeta vendor la hemos creado nosotros y allí vamos a ir poniendo todos los plugins que vamos a usar -->
          <script src="{{ asset('vendor/flexslider/jquery.flexslider-min.js') }}"></script>
 
+         <!-- sweetalert -->
          <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+         <!-- dropzone -->
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js" integrity="sha512-VQQXLthlZQO00P+uEu4mJ4G4OAgqTtKG1hri56kQY1DtdLeIqhKUp9W/lllDDu3uN3SnUNawpW7lBda8+dSi7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     </head>
     <!-- estas en resources\views\layouts\app.blade.php -->
