@@ -21,7 +21,7 @@ class EditProduct extends Component
     public $category_id;
 
     // para cuando se llame desde javascript con emit
-    protected $listeners = ['refreshProduct'];
+    protected $listeners = ['refreshProduct', 'borrarProducto'];
 
     protected $rules = [
         'category_id' => 'required',
@@ -64,6 +64,16 @@ class EditProduct extends Component
 
     public function refreshProduct() {
         $this->product = $this->product->refresh();
+    }
+
+    public function borrarProducto() {
+        $images = $this->product->images;
+        foreach ($images as $image) {
+            Storage::delete($image->url); // borrarla físicamente la carpeta
+            $image->delete(); // borrarlo de la BD
+        }
+        $this->product->delete();
+        return redirect()->route('admin.index');
     }
 
     // cada vez q cambie el valor de product.name
