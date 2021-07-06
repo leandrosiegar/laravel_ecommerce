@@ -17,6 +17,8 @@ class CreateCategory extends Component
 
     public $brands;
     public $rand; // para q se actulice el campo file (pq sino nunca se borra cuando se da de alta)
+    public $categories;
+
     public $createform = [
         'name' => null,
         'slug' => null,
@@ -24,6 +26,8 @@ class CreateCategory extends Component
         'image' => null,
         'brands' => []
     ];
+
+    protected $listeners = ['borrarCategoria']; // para cuando se llama desde un JS de Livewire
 
     protected $rules = [
         'createform.name' => 'required',
@@ -44,6 +48,7 @@ class CreateCategory extends Component
 
     public function mount() {
         $this->getBrands();
+        $this->getCategories();
         $this->rand = rand();
     }
 
@@ -54,6 +59,10 @@ class CreateCategory extends Component
     // cada vez q cambie el campo name se llama automáticamente a esta función
     public function updatedCreateformName($value) {
         $this->createform["slug"] = Str::slug($value);
+    }
+
+    public function getCategories() {
+        $this->categories = Category::all();
     }
 
     public function save() {
@@ -80,15 +89,20 @@ class CreateCategory extends Component
                 'brand_id' => $brand,
                 'category_id' => $category->id
             ]);
-
-
         }
 
 
         $this->reset('createform');
         $this->rand = rand(); // para q se limpie el file
 
+        $this->getCategories(); // para q se actualice el listado de abajo
 
+        $this->emit("saved");
+    }
+
+    public function borrarCategoria(Category $category) {
+        $category->delete();
+        $this->getCategories(); // para q se actualice el listado de abajo
     }
 
     public function render()
